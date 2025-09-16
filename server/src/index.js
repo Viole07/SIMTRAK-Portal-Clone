@@ -1,0 +1,29 @@
+import 'dotenv/config'
+import express from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import mongoose from 'mongoose'
+import authRoutes from './routes/auth.js'
+import profileRoutes from './routes/profile.js'
+import uploadRoutes from './routes/upload.js'
+import tasksRoutes from './routes/tasks.js'
+import journalsRoutes from './routes/journals.js'
+import weeklyRoutes from './routes/weekly.js'
+import leavesRoutes from './routes/leaves.js'
+
+const app = express()
+app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }))
+app.use(express.json({ limit: '10mb' }))
+app.use(cookieParser())
+
+app.use('/api/auth', authRoutes)
+app.use('/api/profile', profileRoutes)
+app.use('/api/upload', uploadRoutes)
+app.use('/api/tasks', tasksRoutes)
+app.use('/api/journals', journalsRoutes)
+app.use('/api/weekly', weeklyRoutes)
+app.use('/api/leaves', leavesRoutes)
+
+mongoose.connect(process.env.MONGO_URI).then(() => {
+  app.listen(process.env.PORT || 4000, () => console.log('API on', process.env.PORT || 4000))
+})
