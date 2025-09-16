@@ -12,7 +12,12 @@ import weeklyRoutes from './routes/weekly.js'
 import leavesRoutes from './routes/leaves.js'
 
 const app = express()
-app.use(cors({ origin: process.env.CLIENT_ORIGIN, credentials: true }))
+const origins = (process.env.CLIENT_ORIGIN || "")
+  .split(",")
+  .map(s => s.trim())
+  .filter(Boolean);
+
+app.use(cors({ origin: origins.length ? origins : true, credentials: true }));
 app.use(express.json({ limit: '10mb' }))
 app.use(cookieParser())
 
