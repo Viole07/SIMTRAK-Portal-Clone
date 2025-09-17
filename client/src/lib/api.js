@@ -6,11 +6,17 @@ const BASE_URL =
 
 export const api = axios.create({
   baseURL: BASE_URL,
-  // only needed if you use cookies. You’re using Authorization Bearer, so keep false:
-  withCredentials: false,
+  withCredentials: true, // <-- important for cookie-based auth (localhost & prod)
 });
 
-// helper to set/remove JWT header
+// Attach Bearer token if we saved one (optional, keeps both flows working)
+api.interceptors.request.use((config) => {
+  const t = localStorage.getItem("token");
+  if (t) config.headers.Authorization = `Bearer ${t}`;
+  return config;
+});
+
 export const setToken = (t) => {
-  api.defaults.headers.common.Authorization = t ? `Bearer ${t}` : "";
+  if (t) localStorage.setItem("token", t);
+  else localStorage.removeItem("token");
 };
