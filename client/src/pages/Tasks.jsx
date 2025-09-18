@@ -15,8 +15,8 @@ export default function Tasks(){
         <h2 className="text-xl font-semibold mb-4">My Tasks</h2>
         <form onSubmit={add} className="grid md:grid-cols-[1fr,220px,140px] gap-3">
           <input className="input" placeholder="Task name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} required/>
-          <input className="input" type="date" value={form.deadline} onChange={e=>setForm({...form,deadline:e.target.value})}/>
-          <button className="btn-primary">Add Task</button>
+          <input className="input" type="date" value={form.deadline} onChange={e=>setForm({...form,deadline:e.target.value})} required/>
+          <button className="btn-primary h-8 rounded">Add Task</button>
         </form>
       </div>
 
@@ -29,9 +29,17 @@ export default function Tasks(){
                 <tr key={t._id}>
                   <td>{t.taskId}</td>
                   <td>{t.name}</td>
-                  <td>{t.status==="Done" ? <span className="badge-ok">Done</span> : <span className="badge-warn">Ongoing</span>}</td>
+                  <td>
+  {t.status === "Done"
+    ? <span className="badge-ok">Done</span>
+    : <span className="badge-warn">Ongoing</span>}
+</td>
                   <td>{t.deadline ? new Date(t.deadline).toISOString().slice(0,10) : "—"}</td>
-                  <td><button onClick={()=>done(t._id)} className="btn-ghost">Mark Done</button></td>
+                  <td>
+  <button onClick={() => done(t._id)} className="btn-chip">
+    Mark Done
+  </button>
+</td>
                 </tr>
               ))}
             </tbody>

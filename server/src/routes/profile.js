@@ -43,11 +43,32 @@ const ProfileZ = z.object({
   photoUrl: z.string().url().optional()
 })
 
-r.post('/upsert', auth, async (req,res) => {
-  const profile = ProfileZ.parse(req.body.profile)
-  await User.findByIdAndUpdate(req.uid, { profile }, { new: true })
-  const user = await User.findById(req.uid)
-  res.json({ user })
-})
+r.post('/upsert', auth, async (req, res) => {
+  try {
+    const incoming = req.body?.profile ?? req.body; // accept either shape
+    const profile = ProfileZ.parse(incoming);       // throws ZodError if any field invalid
+
+    const user = await User.findByIdAndUpdate(
+      req.uid,
+      { $set: { profile } },
+      { new: true }
+    );
+
+    return res.json({ user });
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      // Send a compact list of offending fields back to the client
+      return res.status(400).json({
+        error: 'validation_failed',
+        issues: err.issues.map(i => ({
+          path: i.path.join('.'),
+          message: i.message
+        }))
+      });
+    }
+    console.error(err);
+    return res.status(500).json({ error: 'server_error' });
+  }
+});
 
 export default r

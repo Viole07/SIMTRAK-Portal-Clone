@@ -43,7 +43,7 @@ export default function DailyJournal(){
               </select>
               <input className="input" placeholder="Time taken (minutes)" value={form.timeMin} onChange={e=>setForm({...form,timeMin:e.target.value})}/>
             </div>
-            <button className="btn-primary">Submit DJ</button>
+            <button className="btn-primary h-8 rounded">Submit DJ</button>
           </form>
         )}
       </div>

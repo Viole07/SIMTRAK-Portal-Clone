@@ -1,3 +1,4 @@
+import SimtrakLogo from "@/assets/simtrak-logo.png";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api, setToken } from "@/lib/api";
@@ -31,9 +32,18 @@ export default function Portal(){
       {/* Sidebar */}
       <aside className="w-72 shrink-0 border-r bg-white sticky top-0 h-screen flex flex-col">
         <div className="brand-gradient text-white px-5 py-6">
-          <div className="text-lg font-semibold tracking-wide">SIMTRAK Portal</div>
-          <div className="text-xs/5 opacity-90 mt-1">Hello, {me.profile?.fullName || me.email}</div>
-        </div>
+  <div className="flex items-center gap-2 text-lg font-semibold tracking-wide">
+    <img
+      src={SimtrakLogo}
+      alt="SIMTRAK logo"
+      className="h-13 w-10 drop-shadow-sm"
+      loading="eager"
+      decoding="async"
+    />
+    <span>SIMTRAK Portal</span>
+  </div>
+  <div className="opacity-90 mt-1">Hello, {me.profile?.fullName || me.email}</div>
+</div>
         <nav className="p-4 space-y-1">
           {NAV.map(({to,label,Icon})=>(
             <NavLink key={to} to={to}
@@ -43,7 +53,9 @@ export default function Portal(){
           ))}
         </nav>
         <div className="mt-auto p-4">
-          <button onClick={logout} className="btn-danger w-full"><LogOut size={18}/> Logout</button>
+          <button onClick={logout} className="btn btn-danger-soft w-full">
+          <LogOut size={18}/> Logout
+          </button>
         </div>
       </aside>
 
