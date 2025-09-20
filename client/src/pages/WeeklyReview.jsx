@@ -26,7 +26,7 @@ export default function WeeklyReview(){
           </div>
           <textarea className="textarea" rows={6} placeholder="Highlights, blockers, next week plan"
             value={form.summary} onChange={e=>setForm({...form,summary:e.target.value})}/>
-          <button className="btn-primary h-8 rounded">Submit Weekly Review</button>
+          <button className="btn btn-primary h-8 rounded">Submit Weekly Review</button>
         </form>
       </div>
 

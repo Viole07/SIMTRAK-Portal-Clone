@@ -19,7 +19,7 @@ export default function Leave(){
           </div>
           <textarea className="textarea" placeholder="Reason for leave" value={form.reason} onChange={e=>setForm({...form,reason:e.target.value})}/>
           <textarea className="textarea" placeholder="Responsibilities Passed To" value={form.handover} onChange={e=>setForm({...form,handover:e.target.value})}/>
-          <button className="btn-primary h-8 rounded">Submit</button>
+          <button className="btn btn-primary h-8 rounded">Submit</button>
         </form>
       </div>
 

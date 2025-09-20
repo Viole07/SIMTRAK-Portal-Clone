@@ -16,7 +16,7 @@ export default function Tasks(){
         <form onSubmit={add} className="grid md:grid-cols-[1fr,220px,140px] gap-3">
           <input className="input" placeholder="Task name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} required/>
           <input className="input" type="date" value={form.deadline} onChange={e=>setForm({...form,deadline:e.target.value})} required/>
-          <button className="btn-primary h-8 rounded">Add Task</button>
+          <button className="btn btn-primary h-8 rounded">Add Task</button>
         </form>
       </div>
 
